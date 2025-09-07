@@ -8,7 +8,6 @@ import { cookies } from "next/headers";
 import { avatarPlaceholderUrl } from "@/constants";
 import { redirect } from "next/navigation";
 
-
 const getUserByEmail = async (email: string) => {
   const { tablesDB } = await createAdminClient();
 
@@ -100,19 +99,23 @@ export const verifySecret = async ({
 };
 
 export const getCurrentUser = async () => {
-  const { tablesDB, account } = await createSessionClent();
+  try {
+    const { tablesDB, account } = await createSessionClent();
 
-  const result = await account.get();
+    const result = await account.get();
 
-  const user = await tablesDB.listRows({
-    databaseId: appwriteConfig.databaseId,
-    tableId: appwriteConfig.usersTableId,
-    queries: [Query.equal("accountId", result.$id)],
-  });
+    const user = await tablesDB.listRows({
+      databaseId: appwriteConfig.databaseId,
+      tableId: appwriteConfig.usersTableId,
+      queries: [Query.equal("accountId", result.$id)],
+    });
 
-  if (user.total <= 0) return null;
+    if (user.total <= 0) return null;
 
-  return parseStringify(user.rows[0]);
+    return parseStringify(user.rows[0]);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const signOut = async () => {
