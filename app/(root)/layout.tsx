@@ -1,0 +1,31 @@
+import Header from '@/components/Header'
+import MobileNavigation from '@/components/MobileNavigation'
+import Sidebar from '@/components/Sidebar'
+import { getCurrentUser } from '@/lib/actions/user.action'
+import { redirect } from 'next/navigation'
+import { Toaster } from "@/components/ui/sonner"
+import React from 'react'
+
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+    const currentUser = await getCurrentUser(); // Replace with actual user fetching logic
+
+    if (!currentUser) {
+        return redirect('/sign-in');
+    }
+
+    return (
+        <main className='flex h-screen'>
+            <Sidebar {...currentUser} />
+            <section className='flex h-full flex-1 flex-col'>
+                <MobileNavigation {...currentUser} />
+                <Header userId={currentUser.$id} accountId={currentUser.accountId}/>
+                <div className="!main-content">
+                    {children}
+                </div>
+            </section>
+            <Toaster/>
+        </main>
+    )
+}
+
+export default Layout
