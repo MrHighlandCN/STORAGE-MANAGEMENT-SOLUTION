@@ -1,6 +1,6 @@
 'use client'
 
-import React, { use, useState } from 'react'
+import React, { useState } from 'react'
 import {
   Sheet,
   SheetContent,
@@ -76,7 +76,6 @@ const MobileNavigation = ({ $id: ownerId, accountId, fullName, avatar, email }: 
           <nav className='!mobile-nav'>
             <ul className="!mobile-nav-list">
               {navItems.map((item, index) => {
-                const active = pathname === item.url;
 
                 return (
                   <Link
