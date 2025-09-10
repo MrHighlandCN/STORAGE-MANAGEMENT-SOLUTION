@@ -13,8 +13,7 @@ A **cloud storage web application** built with **Next.js (frontend)** and **Appw
 Clone the repository and install dependencies:  
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/MrHighlandCN/STORAGE-MANAGEMENT-SOLUTION.git
 npm install
 ```
 
